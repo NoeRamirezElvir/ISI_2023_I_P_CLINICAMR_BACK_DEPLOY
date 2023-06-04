@@ -47,7 +47,7 @@ class CargosView(View):
 
         if len(jd['nombre']) <= 0:
             cargos = {'message': "El nombre esta vacío."}
-        elif jd['motivos'][0]==" ":
+        elif jd['nombre'][0]==" ":
             cargos = {'message': "El nombre no puede iniciar con espacios."}
         elif not validar_cadena_letras(jd['motivos']):
             cargos = {'message': "El nombre solo puede contener letras."}
@@ -72,8 +72,8 @@ class CargosView(View):
         elif jd['activo'] > 1:
             cargos = {'message': "Activo debe unicamente puede ser 0 o 1."}
         else:
-            cargos = {'message':"Registro Exitoso."}
             CargoEmpleado.objects.create(nombre=jd['nombre'], descripcion=jd['descripcion'],activo=jd['activo'])
+            cargos = {'message':"Registro Exitoso."}
         return JsonResponse(cargos)
 
 #Actualizar un registro de cargos
@@ -84,7 +84,7 @@ class CargosView(View):
             cargo=CargoEmpleado.objects.get(id=id)
             if len(jd['nombre']) <= 0:
                 cargos = {'message': "El nombre esta vacío."}
-            elif jd['motivos'][0]==" ":
+            elif jd['nombre'][0]==" ":
                 cargos = {'message': "El nombre no puede iniciar con espacios."}
             elif not validar_cadena_letras(jd['motivos']):
                 cargos = {'message': "El nombre solo puede contener letras."}
