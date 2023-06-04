@@ -61,12 +61,19 @@ class CargosView(View):
             cargos = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo."}
         elif len(jd['nombre']) > 50:
             cargos = {'message': "El nombre debe tener menos de 50 caracteres."}
+
         elif len(jd['descripcion']) <= 0:
             cargos = {'message': "La descripción esta vacía."}
+        elif jd['descripcion'][0]==" ":
+            cargos = {'message': "El descripcion no puede iniciar con espacios."}
         elif len(jd['descripcion']) < 4:
             cargos = {'message': "La descripción debe tener mas de 4 caracteres."}
         elif len(jd['descripcion']) > 50:
-            cargos = {'message': "La descripción debe tener menos de 50 caracteres."}
+            cargos = {'message': "La descripción debe tener menos de 50 caracteres."} 
+        elif not validar_cadena_espacios(jd['descripcion']):
+            cargos = {'message': "No se permiten mas de un espacio consecutivo."}
+        elif validar_cadena_repeticion(jd['descripcion']):
+            cargos = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo."}
         elif jd['activo'] < 0:
             cargos = {'message': "Activo debe ser positivo."}
         elif jd['activo'] > 1:
@@ -96,12 +103,18 @@ class CargosView(View):
                 cargos = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo."}
             elif len(jd['nombre']) > 50:
                 cargos = {'message': "El nombre debe tener menos de 50 caracteres."}
+
             elif len(jd['descripcion']) <= 0:
                 cargos = {'message': "La descripción esta vacía."}
+            elif jd['descripcion'][0]==" ":
+                cargos = {'message': "El descripcion no puede iniciar con espacios."}
             elif len(jd['descripcion']) < 4:
                 cargos = {'message': "La descripción debe tener mas de 4 caracteres."}
             elif len(jd['descripcion']) > 50:
-                cargos = {'message': "La descripción debe tener menos de 50 caracteres."}
+                cargos = {'message': "La descripción debe tener menos de 50 caracteres."} 
+            elif not validar_cadena_espacios(jd['descripcion']):
+                cargos = {'message': "No se permiten mas de un espacio consecutivo."}
+                
             elif jd['activo'] < 0:
                 cargos = {'message': "Activo debe ser positivo."}
             elif jd['activo'] > 1:
