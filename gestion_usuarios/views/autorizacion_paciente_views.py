@@ -47,7 +47,8 @@ class autorizarView(View):
 
         if len(jd['motivos']) <= 0:
             autorizar = {'message': "El motivos esta vacío."}
-
+        if not validar_cadena_letras(jd['motivos']):
+            autorizar = {'message': "El motivos solo puede contener letras."}
         elif len(jd['motivos']) < 4:
             autorizar = {'message': "El motivos debe tener mas de 4 caracteres."}
         elif not validar_cadena_espacios(jd['motivos']):
@@ -58,9 +59,9 @@ class autorizarView(View):
             autorizar = {'message': "El motivos debe tener menos de 50 caracteres."}
         
         elif jd['confirmacion'] < 0:
-            autorizar = {'message': "confirmacion debe ser positivo."}
+            autorizar = {'message': "confirmacion puede ser positivo."}
         elif jd['confirmacion'] > 1:
-            autorizar = {'message': "confirmacion debe unicamente puede ser 0 o 1."}
+            autorizar = {'message': "confirmacion puede unicamente ser 0 o 1."}
         else:
             AutorizacionPaciente.objects.create(motivos=jd['motivos'],confirmacion=jd['confirmacion'])
             autorizar = {'message':"Registro Exitoso."}
@@ -74,9 +75,10 @@ class autorizarView(View):
             atorizacion= AutorizacionPaciente.objects.get(id=id)
             if len(jd['motivos']) <= 0:
                 autorizar = {'message': "El motivos esta vacío."}
+            if not validar_cadena_letras(jd['motivos']):
+                autorizar = {'message': "El motivos solo puede contener letras."}
             elif len(jd['motivos']) < 4:
                 autorizar = {'message': "El motivos debe tener mas de 4 caracteres."}
-            
             elif len(jd['motivos']) > 50:
                 autorizar = {'message': "El motivos debe tener menos de 50 caracteres."}
             elif jd['confirmacion'] < 0:
@@ -111,3 +113,7 @@ def validar_cadena_repeticion(cadena):
 def validar_cadena_espacios(cadena):
     patron = r'^[^ ]+(?: {0,1}[^ ]+)*$'
     return bool(re.match(patron,cadena))
+
+def validar_cadena_letras(cadena):
+    patron = r'^[A-Za-z]+$'
+    return bool(re.search(patron, cadena))
