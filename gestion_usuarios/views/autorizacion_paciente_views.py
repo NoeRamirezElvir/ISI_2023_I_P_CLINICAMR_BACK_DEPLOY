@@ -77,6 +77,10 @@ class autorizarView(View):
                 autorizar = {'message': "El motivos esta vacío."}
             if not validar_cadena_letras(jd['motivos']):
                 autorizar = {'message': "El motivos solo puede contener letras."}
+            elif not validar_cadena_espacios(jd['motivos']):
+                autorizar = {'message': "No se permiten mas de un espacio consecutivo."}
+            elif validar_cadena_repeticion(jd['motivos']):
+                autorizar = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo."}
             elif len(jd['motivos']) < 4:
                 autorizar = {'message': "El motivos debe tener mas de 4 caracteres."}
             elif len(jd['motivos']) > 50:

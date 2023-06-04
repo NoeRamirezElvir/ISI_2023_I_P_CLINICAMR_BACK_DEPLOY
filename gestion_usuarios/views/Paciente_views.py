@@ -135,15 +135,14 @@ class PacienteViews(View):
             pacientes = {'message': f"El documento debe cumplir la longitud asignada:{validar_documento(jd['idTipoDocumento'])}"} 
         else:
             pacientes = {'message': "Registro Exitoso."}
-            Paciente.objects.create(nombre=jd['nombre'],
-                                     apellido=jd['apellido'],
+            Paciente.objects.create(nombre=jd['nombre'].capitalize(),
+                                     apellido=jd['apellido'].capitalize(),
                                      fechaNacimiento=str(jd['fechaNacimiento']),
-                                     correo=jd['correo'],
+                                     correo=jd['correo'].lower(),
                                      telefono=str(jd['telefono']),
-                                     direccion=jd['direccion'],
+                                     direccion=jd['direccion'].lower(),
                                      idTipoDocumento=(instanciar_documento(jd['idTipoDocumento'])),
                                      documento=jd['documento'])
-            pacientes = {'message':"Registro Exitoso."}
         return JsonResponse(pacientes)
 
 #Actualizar un registro de cargos
@@ -220,11 +219,11 @@ class PacienteViews(View):
                 pacientes = {'message': f"El documento debe cumplir la longitud asignada:{validar_documento(jd['idTipoDocumento'])}"} 
             else:
                 pacientes = {'message': "Registro Exitoso."}
-                paciente.nombre = jd['nombre']
-                paciente.apellido = jd['apellido']
-                paciente.correo = jd['correo']
+                paciente.nombre = jd['nombre'].capitalize()
+                paciente.apellido = jd['apellido'].capitalize()
+                paciente.correo = jd['correo'].lower()
                 paciente.telefono = str(jd['telefono'])
-                paciente.direccion = jd['direccion']
+                paciente.direccion = jd['direccion'].lower()
                 paciente.fechaNacimiento=str(jd['fechaNacimiento'])
                 paciente.idTipoDocumento = instanciar_documento(jd['idTipoDocumento'])
                 paciente.documento = jd['documento']
