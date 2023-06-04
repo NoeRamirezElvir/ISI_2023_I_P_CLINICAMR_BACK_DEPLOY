@@ -58,26 +58,36 @@ class PacienteViews(View):
         jd=json.loads(request.body)
         rsp_fechaNacimiento = datetime.date.fromisoformat(jd['fechaNacimiento'])
         if len(jd['nombre']) <= 0:
-            pacientes = {'message': "El nombre esta vacío."}
+            pacientes = {'message': "El nombre esta vacío."}   
+        elif jd['nombre'][0] == " ":
+            pacientes = {'message': "El nombre no puede iniciar con espacios."} 
         elif len(jd['nombre']) < 3:
             pacientes = {'message': "El nombre debe tener más de 3 caracteres."}
         elif len(jd['nombre']) > 50:
             pacientes = {'message': "El nombre debe tener menos de 50 caracteres."}
+        elif not validar_cadena_letras(jd['nombre']):
+            pacientes = {'message': "El nombre solo debe tener letras"}
         elif validar_cadena_repeticion(jd['nombre']):
             pacientes = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo."} 
         elif not validar_cadena_espacios(jd['nombre']):
             pacientes = {'message': "No se permiten mas de un espacio consecutivo."}
+
         elif len(jd['apellido']) <= 0:
             pacientes = {'message': "El apellido esta vacío."}
+        elif jd['apellido'][0] == " ":
+            pacientes = {'message': "El apellido no puede iniciar con espacios."} 
+        elif not validar_cadena_letras(jd['apellido']):
+            pacientes = {'message': "El apellido solo debe tener letras"}
         elif len(jd['apellido']) < 3:
             pacientes = {'message': "El apellido debe tener más de 3 caracteres."}
         elif not validar_cadena_espacios(jd['apellido']):
             pacientes = {'message': "No se permiten mas de un espacio consecutivo."}
-        
         elif validar_cadena_repeticion(jd['apellido']):
             pacientes = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo."}      
         elif len(jd['apellido']) > 50:
             pacientes = {'message': "El apellido debe tener menos de 50 caracteres."}
+
+        
         elif len(jd['correo']) <= 0:
             pacientes = {'message': "El correo esta vacío."}
         elif len(jd['correo']) < 5:
@@ -154,16 +164,34 @@ class PacienteViews(View):
             paciente=Paciente.objects.get(id=id)
             if len(jd['nombre']) <= 0:
                 pacientes = {'message': "El nombre esta vacío."}
+            elif jd['nombre'][0] == " ":
+                pacientes = {'message': "El nombre no puede iniciar con espacios."} 
             elif len(jd['nombre']) < 3:
                 pacientes = {'message': "El nombre debe tener más de 3 caracteres."}
             elif len(jd['nombre']) > 50:
                 pacientes = {'message': "El nombre debe tener menos de 50 caracteres."}
+            elif not validar_cadena_letras(jd['nombre']):
+                pacientes = {'message': "El nombre solo debe tener letras"}
+            elif validar_cadena_repeticion(jd['nombre']):
+                pacientes = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo."} 
+            elif not validar_cadena_espacios(jd['nombre']):
+                pacientes = {'message': "No se permiten mas de un espacio consecutivo."}
+
             elif len(jd['apellido']) <= 0:
                 pacientes = {'message': "El apellido esta vacío."}
+            elif jd['apellido'][0] == " ":
+                pacientes = {'message': "El apellido no puede iniciar con espacios."} 
             elif len(jd['apellido']) < 3:
                 pacientes = {'message': "El apellido debe tener más de 3 caracteres."}
             elif len(jd['apellido']) > 50:
                 pacientes = {'message': "El apellido debe tener menos de 50 caracteres."}
+            elif not validar_cadena_letras(jd['apellido']):
+                pacientes = {'message': "El apellido solo debe tener letras"}
+            elif not validar_cadena_espacios(jd['apellido']):
+                pacientes = {'message': "No se permiten mas de un espacio consecutivo."}
+            elif validar_cadena_repeticion(jd['apellido']):
+                pacientes = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo."}      
+
             elif len(jd['correo']) <= 0:
                 pacientes = {'message': "El correo esta vacío."}
             elif len(jd['correo']) < 5:
@@ -301,7 +329,9 @@ def validar_fecha(fechaNacimiento):
     else:
         return True
 
-
+def validar_cadena_letras(cadena):
+    patron = r'^[A-Za-z\s]+$'
+    return bool(re.search(patron, cadena))
   
 
     

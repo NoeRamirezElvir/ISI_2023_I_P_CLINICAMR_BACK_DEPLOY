@@ -47,6 +47,8 @@ class autorizarView(View):
 
         if len(jd['motivos']) <= 0:
             autorizar = {'message': "El motivos esta vacío."}
+        elif jd['motivos'][0] == " ":
+            autorizar = {'message': "Motivos no puede iniciar con espacios."} 
         if not validar_cadena_letras(jd['motivos']):
             autorizar = {'message': "El motivos solo puede contener letras."}
         elif len(jd['motivos']) < 4:
@@ -63,7 +65,7 @@ class autorizarView(View):
         elif jd['confirmacion'] > 1:
             autorizar = {'message': "confirmacion puede unicamente ser 0 o 1."}
         else:
-            AutorizacionPaciente.objects.create(motivos=jd['motivos'],confirmacion=jd['confirmacion'])
+            AutorizacionPaciente.objects.create(motivos=(jd['motivos'].lower()).capitalize(),confirmacion=jd['confirmacion'])
             autorizar = {'message':"Registro Exitoso."}
         return JsonResponse(autorizar)
 
@@ -75,6 +77,8 @@ class autorizarView(View):
             atorizacion= AutorizacionPaciente.objects.get(id=id)
             if len(jd['motivos']) <= 0:
                 autorizar = {'message': "El motivos esta vacío."}
+            elif jd['motivos'][0] == " ":
+                autorizar = {'message': "Motivos no puede iniciar con espacios."} 
             if not validar_cadena_letras(jd['motivos']):
                 autorizar = {'message': "El motivos solo puede contener letras."}
             elif not validar_cadena_espacios(jd['motivos']):
@@ -91,7 +95,7 @@ class autorizarView(View):
                 autorizar = {'message': "confirmacion debe unicamente puede ser 0 o 1."}
             else:
                 autorizar = {'message': "Registro Exitoso."}
-                atorizacion.motivos = jd['motivos']
+                atorizacion.motivos = (jd['motivos'].lower()).capitalize()
                 atorizacion.confirmacion = jd['confirmacion']
                 atorizacion.save()
                 autorizar = {'message': "La actualización fue exitosa."}

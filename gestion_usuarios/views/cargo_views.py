@@ -47,8 +47,12 @@ class CargosView(View):
 
         if len(jd['nombre']) <= 0:
             cargos = {'message': "El nombre esta vacío."}
+        elif not jd['motivos'][0]==" ":
+            cargos = {'message': "El nombre no puede iniciar con espacios."}
+        elif not validar_cadena_letras(jd['motivos']):
+            cargos = {'message': "El nombre solo puede contener letras."}
         elif (validar_cargo_repetido(jd['nombre'])):
-            cargos = {'message': "El cargo ya existe."}
+            cargos = {'message': "El cargo ya existe."}   
         elif len(jd['nombre']) < 4:
             cargos = {'message': "El nombre debe tener mas de 4 caracteres."}
         elif not validar_cadena_espacios(jd['nombre']):
@@ -80,6 +84,10 @@ class CargosView(View):
             cargo=CargoEmpleado.objects.get(id=id)
             if len(jd['nombre']) <= 0:
                 cargos = {'message': "El nombre esta vacío."}
+            elif not jd['motivos'][0]==" ":
+                cargos = {'message': "El nombre no puede iniciar con espacios."}
+            elif not validar_cadena_letras(jd['motivos']):
+                cargos = {'message': "El nombre solo puede contener letras."}
             elif len(jd['nombre']) < 4:
                 cargos = {'message': "El nombre debe tener mas de 4 caracteres."}
             elif not validar_cadena_espacios(jd['nombre']):
@@ -134,3 +142,7 @@ def validar_cadena_repeticion(cadena):
 def validar_cadena_espacios(cadena):
     patron = r'^[^ ]+(?: {0,1}[^ ]+)*$'
     return bool(re.match(patron,cadena))
+
+def validar_cadena_letras(cadena):
+    patron = r'^[A-Za-z\s]+$'
+    return bool(re.search(patron, cadena))

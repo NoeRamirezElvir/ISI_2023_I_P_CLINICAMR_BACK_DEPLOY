@@ -88,6 +88,8 @@ class ProveedorView(View):
                 mensaje_post = {'message': "La dirección esta vacía."}
             elif len(jd['direccion']) < 5:
                 mensaje_post = {'message': "La dirección debe tener más de 5 caracteres."}
+            elif not validar_direccion(jd['direccion']):
+                mensaje_post = {'message': "La dirección es invalida."}
             elif len(jd['direccion']) > 50:
                 mensaje_post = {'message': "La dirección debe tener menos de 50 caracteres."}
             elif not validar_cadena_espacios(jd['direccion']):
@@ -96,10 +98,10 @@ class ProveedorView(View):
                 mensaje_post = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo.[direccion]"} 
             else:
                 mensaje_post = {'message': "Registro Exitoso."}
-                Proveedor.objects.create(nombre=jd['nombre'],
+                Proveedor.objects.create(nombre=jd['nombre'].capitalize(),
                                         telefono=jd['telefono'],
-                                        correo=jd['correo'],
-                                        direccion=jd['direccion'])
+                                        correo=jd['correo'].lower(),
+                                        direccion=jd['direccion'].lower())
                 mensaje_post = {'message':"Registro Exitoso."}
             return JsonResponse(mensaje_post)
         except Exception as e:
@@ -147,6 +149,8 @@ class ProveedorView(View):
                     mensaje_put = {'message': "La dirección esta vacía."}
                 elif len(jd['direccion']) < 5:
                     mensaje_put = {'message': "La dirección debe tener más de 5 caracteres."}
+                elif not validar_direccion(jd['direccion']):
+                    mensaje_put = {'message': "La dirección es invalida."}
                 elif len(jd['direccion']) > 50:
                     mensaje_put = {'message': "La dirección debe tener menos de 50 caracteres."}
                 elif not validar_cadena_espacios(jd['direccion']):
@@ -154,10 +158,10 @@ class ProveedorView(View):
                 elif validar_cadena_repeticion(jd['direccion']):
                     mensaje_put = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo.[direccion]"}
                 else:
-                    proveedor_actualizar.nombre = jd['nombre']
+                    proveedor_actualizar.nombre = jd['nombre'].capitalize()
                     proveedor_actualizar.telefono = jd['telefono']
-                    proveedor_actualizar.correo = jd['correo']
-                    proveedor_actualizar.direccion = jd['direccion']
+                    proveedor_actualizar.correo = jd['correo'].lower()
+                    proveedor_actualizar.direccion = jd['direccion'].lower()
                     proveedor_actualizar.save()
                     mensaje_put = {'message': "La actualización fue exitosa."}
             return JsonResponse(mensaje_put)
@@ -204,4 +208,8 @@ def validar_cadena_repeticion(cadena):
 
 def validar_cadena_espacios(cadena):
     patron = r'^[^ ]+(?: {0,1}[^ ]+)*$'
+    return bool(re.match(patron,cadena))
+
+def validar_direccion(cadena):
+    patron = r'^\d+\s+\w+'
     return bool(re.match(patron,cadena))

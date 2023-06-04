@@ -57,6 +57,8 @@ class UsuarioViews(View):
         simbolos =['$', '@', '#', '%', '!', '¡','?', '¿']
         if len(jd['nombreUsuario']) <= 0:
             usuariosr = {'message': "El nombre esta vacío."}
+        elif jd['nombreUsuario'][0] == " ":
+            usuariosr = {'message': "No puede haber un espacio al inicio del texto."}
         elif len(jd['nombreUsuario']) < 5:
             usuariosr = {'message': "El nombre debe tener mas de 5 caracteres."}
         elif not validar_cadena_espacios(jd['nombreUsuario']):
@@ -93,7 +95,7 @@ class UsuarioViews(View):
             usuariosr = {'message': "Bloqueado unicamente puede ser 0 o 1."}
         else:
             usuariosr = {'message': "Registro Exitoso."}
-            Usuario.objects.create(idEmpleado=instanciar_empleado(jd['idEmpleado']), nombreUsuario=jd['nombreUsuario'],password=encriptar_password(jd['password']), activo=jd['activo'], bloqueado=jd['bloqueado'],fechaCreacion=datetime.now(),fechaModificacion=datetime.now())
+            Usuario.objects.create(idEmpleado=instanciar_empleado(jd['idEmpleado']), nombreUsuario=jd['nombreUsuario'].lower(),password=encriptar_password(jd['password']), activo=jd['activo'], bloqueado=jd['bloqueado'],fechaCreacion=datetime.now(),fechaModificacion=datetime.now())
             usuariosr = {'message':"Registro Exitoso."}
         return JsonResponse(usuariosr)
 
@@ -106,6 +108,8 @@ class UsuarioViews(View):
             simbolos =['$', '@', '#', '%', '!', '¡','?', '¿']
             if len(jd['nombreUsuario']) <= 0:
                 usuariosr = {'message': "El nombre esta vacío."}
+            elif jd['nombreUsuario'][0] == " ":
+                usuariosr = {'message': "No puede haber un espacio al inicio del texto."}
             elif not validar_cadena_espacios(jd['nombreUsuario']):
                 usuariosr = {'message': "No se permiten mas de un espacio consecutivo."}
             elif validar_cadena_repeticion(jd['nombreUsuario']):
@@ -143,7 +147,7 @@ class UsuarioViews(View):
             else:
                 usuariosr = {'message': "Registro Exitoso."}
                 usuario.idEmpleado = instanciar_empleado(jd['idEmpleado'])
-                usuario.nombreUsuario = jd['nombreUsuario']
+                usuario.nombreUsuario = jd['nombreUsuario'].lower()
                 usuario.password = encriptar_password(jd['password'])
                 usuario.activo = jd['activo']
                 usuario.bloqueado = jd['bloqueado']
