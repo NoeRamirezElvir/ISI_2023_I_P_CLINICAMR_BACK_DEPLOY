@@ -49,7 +49,7 @@ class CargosView(View):
             cargos = {'message': "El nombre esta vacío."}
         elif jd['nombre'][0]==" ":
             cargos = {'message': "El nombre no puede iniciar con espacios."}
-        elif not validar_cadena_letras(jd['motivos']):
+        elif not validar_cadena_letras(jd['nombre']):
             cargos = {'message': "El nombre solo puede contener letras."}
         elif (validar_cargo_repetido(jd['nombre'])):
             cargos = {'message': "El cargo ya existe."}   
@@ -86,7 +86,7 @@ class CargosView(View):
                 cargos = {'message': "El nombre esta vacío."}
             elif jd['nombre'][0]==" ":
                 cargos = {'message': "El nombre no puede iniciar con espacios."}
-            elif not validar_cadena_letras(jd['motivos']):
+            elif not validar_cadena_letras(jd['nombre']):
                 cargos = {'message': "El nombre solo puede contener letras."}
             elif len(jd['nombre']) < 4:
                 cargos = {'message': "El nombre debe tener mas de 4 caracteres."}
