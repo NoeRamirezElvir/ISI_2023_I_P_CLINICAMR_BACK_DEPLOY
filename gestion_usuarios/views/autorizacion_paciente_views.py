@@ -115,5 +115,5 @@ def validar_cadena_espacios(cadena):
     return bool(re.match(patron,cadena))
 
 def validar_cadena_letras(cadena):
-    patron = r'^[A-Za-z]+$'
+    patron = r'^[A-Za-z\s]+$'
     return bool(re.search(patron, cadena))
