@@ -222,8 +222,6 @@ class examenViews(View):
 
         elif len(jd['observacion']) <= 0:
             examenes = {'message': "La observación esta vacía."}
-        elif jd['observacion']['0'] == " ":
-            examenes = {'message': "La observación no puede iniciar con espacios."}
         elif len(jd['observacion']) < 5:
             examenes = {'message': "La observación debe tener más de 5 caracteres."}
         elif len(jd['observacion']) > 50:
@@ -266,16 +264,10 @@ class examenViews(View):
             examenes = {'message': "Ya hay una cita programada en la misma fecha"}
         elif len(jd['observacion']) <= 0:
             examenes = {'message': "La observación esta vacía."}
-        elif jd['observacion']['0'] == " ":
-            examenes = {'message': "La observación no puede iniciar con espacios."}
         elif len(jd['observacion']) < 5:
             examenes = {'message': "La observación debe tener más de 5 caracteres."}
         elif len(jd['observacion']) > 50:
             examenes = {'message': "La observación debe tener menos de 50 caracteres."}
-        elif not validar_cadena_espacios(jd['observacion']):
-            examenes = {'message': "No se permiten mas de un espacio consecutivo.[observacion]"}
-        elif validar_cadena_repeticion(jd['observacion']):
-            examenes = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo.[observacion]"} 
         else:            
             examen.idMuestra = instanciar_muestra(jd['idMuestra'])
             examen.idTipo = instanciar_tipo(jd['idTipo'])
