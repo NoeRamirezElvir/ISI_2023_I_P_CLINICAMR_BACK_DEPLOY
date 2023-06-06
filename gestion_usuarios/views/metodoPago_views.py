@@ -46,7 +46,7 @@ class metodoPagoViews(View):
         jd=json.loads(request.body)
         if len(jd['nombre']) <= 0:
             metodop = {'message': "El nombre esta vacío."}
-        elif jd['nombre'] == " ":
+        elif jd['nombre'][0] == " ":
             metodop = {'message': "El nombre no puede iniciar con espacios."}
         elif validar_metodop_repetida(jd['nombre']):
             metodop = {'message': "El nombre ya existe."}
@@ -62,7 +62,7 @@ class metodoPagoViews(View):
             metodop = {'message': "El nombre debe tener menos de 50 caracteres."}
         elif len(jd['descripcion']) <= 0:
             metodop = {'message': "La descripción esta vacía."}
-        elif jd['descripcion'] == " ":
+        elif jd['descripcion'][0] == " ":
             metodop = {'message': "La descripcion no puede iniciar con espacios."}
         elif not validar_cadena_letras(jd['descripcion']):
             metodop = {'message': "La descripcion solo permite letras."}
@@ -88,7 +88,7 @@ class metodoPagoViews(View):
             metodopago=MetodoDePago.objects.get(id=id)
             if len(jd['nombre']) <= 0:
                 metodop = {'message': "El nombre esta vacío."}
-            elif jd['nombre'] == " ":
+            elif jd['nombre'][0] == " ":
                 metodop = {'message': "El nombre no puede iniciar con espacios."}
             elif len(jd['nombre']) < 4:
                 metodop = {'message': "El nombre debe tener mas de 4 caracteres."}
@@ -102,7 +102,7 @@ class metodoPagoViews(View):
                 metodop = {'message': "El nombre debe tener menos de 50 caracteres."}
             elif len(jd['descripcion']) <= 0:
                 metodop = {'message': "La descripción esta vacía."}
-            elif jd['descripcion'] == " ":
+            elif jd['descripcion'][0] == " ":
                 metodop = {'message': "La descripcion no puede iniciar con espacios."}
             elif not validar_cadena_letras(jd['descripcion']):
                 metodop = {'message': "La descripcion solo permite letras."}

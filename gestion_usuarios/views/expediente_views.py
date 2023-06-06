@@ -138,7 +138,7 @@ class ExpedientesViews(View):
             expedientes = {'message': "El paciente no existe"}
         elif len(jd['observacion']) <= 0:
             expedientes = {'message': "La observación esta vacía."}
-        elif jd['observacion']['0'] == " ":
+        elif jd['observacion'][0] == " ":
             expedientes = {'message': "La observación no puede iniciar con espacios."}
         elif len(jd['observacion']) < 5:
             expedientes = {'message': "La observación debe tener más de 5 caracteres."}
@@ -167,7 +167,7 @@ class ExpedientesViews(View):
                 expedientes = {'message': "El paciente no existe"}
             elif len(jd['observacion']) <= 0:
                 expedientes = {'message': "La observación esta vacía."}
-            elif jd['observacion']['0'] == " ":
+            elif jd['observacion'][0] == " ":
                 expedientes = {'message': "La observación no puede iniciar con espacios."}
             elif len(jd['observacion']) < 5:
                 expedientes = {'message': "La observación debe tener más de 5 caracteres."}
