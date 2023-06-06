@@ -138,6 +138,8 @@ class ExpedientesViews(View):
             expedientes = {'message': "El paciente no existe"}
         elif len(jd['observacion']) <= 0:
             expedientes = {'message': "La observación esta vacía."}
+        elif jd['observacion']['0'] == " ":
+            expedientes = {'message': "La observación no puede iniciar con espacios."}
         elif len(jd['observacion']) < 5:
             expedientes = {'message': "La observación debe tener más de 5 caracteres."}
         elif len(jd['observacion']) > 50:
@@ -165,6 +167,8 @@ class ExpedientesViews(View):
                 expedientes = {'message': "El paciente no existe"}
             elif len(jd['observacion']) <= 0:
                 expedientes = {'message': "La observación esta vacía."}
+            elif jd['observacion']['0'] == " ":
+                expedientes = {'message': "La observación no puede iniciar con espacios."}
             elif len(jd['observacion']) < 5:
                 expedientes = {'message': "La observación debe tener más de 5 caracteres."}
             elif len(jd['observacion']) > 50:
@@ -261,6 +265,8 @@ def validar_cadena_repeticion(cadena):
 def validar_cadena_espacios(cadena):
     patron = r'^[^ ]+(?: {0,1}[^ ]+)*$'
     return bool(re.match(patron,cadena))
+
+
 
 def formato_fecha(fecha):
     if fecha is not None:

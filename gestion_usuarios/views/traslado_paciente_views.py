@@ -150,6 +150,8 @@ class TrasladosViews(View):
             traslados = {'message': "El medico no existe"}
         if len(jd['nombre']) <= 0:
             traslados = {'message': "El nombre esta vacío."}
+        elif jd['nombre'][0] == " ":
+            traslados = {'message': "El nombre no puede iniciar con espacios."}
         elif len(jd['nombre']) < 3:
             traslados = {'message': "El nombre debe tener más de 3 caracteres."}
         elif len(jd['nombre']) > 50:
@@ -182,13 +184,17 @@ class TrasladosViews(View):
             traslados = {'message': "La dirección debe tener más de 5 caracteres."}
         elif len(jd['direccion']) > 50:
             traslados = {'message': "La dirección debe tener menos de 50 caracteres."}
+        elif validar_cadena_repeticion(jd['direccion']):
+            traslados = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo.[direccion]"} 
+        elif not validar_cadena_espacios(jd['direccion']):
+            traslados = {'message': "No se permiten mas de un espacio consecutivo.[direccion]"}
         else:
             traslados = {'message': "Registro Exitoso."}
             TrasladoPaciente.objects.create(idAutorizacionPaciente=instanciar_autorizacion(jd['idAutorizacionPaciente']),
                                             idPaciente=instanciar_paciente(jd['idPaciente']),
                                             idEmpleado=instanciar_empleado(jd['idEmpleado']),
-                                            nombre=jd['nombre'],
-                                            direccion=jd['direccion'],
+                                            nombre=jd['nombre'].upper(),
+                                            direccion=jd['direccion'].lower(),
                                             telefono=jd['telefono'],
                                             )
                                                                     
@@ -211,6 +217,8 @@ class TrasladosViews(View):
             traslados = {'message': "El medico no existe"}
         if len(jd['nombre']) <= 0:
             traslados = {'message': "El nombre esta vacío."}
+        elif jd['nombre'][0] == " ":
+            traslados = {'message': "El nombre no puede iniciar con espacios."}
         elif len(jd['nombre']) < 3:
             traslados = {'message': "El nombre debe tener más de 3 caracteres."}
         elif len(jd['nombre']) > 50:
@@ -243,13 +251,17 @@ class TrasladosViews(View):
             traslados = {'message': "La dirección debe tener más de 5 caracteres."}
         elif len(jd['direccion']) > 50:
             traslados = {'message': "La dirección debe tener menos de 50 caracteres."}
+        elif validar_cadena_repeticion(jd['direccion']):
+            traslados = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo.[direccion]"} 
+        elif not validar_cadena_espacios(jd['direccion']):
+            traslados = {'message': "No se permiten mas de un espacio consecutivo.[direccion]"}
         else:
             traslado.idPaciente = instanciar_paciente(jd['idPaciente'])
             traslado.idAutorizacionPaciente = instanciar_autorizacion(jd['idAutorizacionPaciente'])
             traslado.idEmpleado = instanciar_empleado(jd['idEmpleado'])
-            traslado.nombre = jd['nombre']
+            traslado.nombre = jd['nombre'].upper()
             traslado.telefono = jd['telefono']
-            traslado.direccion = jd['direccion']
+            traslado.direccion = jd['direccion'].lower()
             traslado.save()
             traslados = {'message': "La actualización fue exitosa."}
         return JsonResponse(traslados)

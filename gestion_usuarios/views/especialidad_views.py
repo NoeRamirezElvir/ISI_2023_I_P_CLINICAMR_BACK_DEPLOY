@@ -48,6 +48,10 @@ class EspecialidadViews(View):
             especialidad = {'message': "El nombre esta vacío."}
         elif validar_especialidad_repetida(jd['nombre']):
             especialidad = {'message': "El nombre ya existe."}
+        elif jd['nombre'][0]==" ":
+            especialidad = {'message': "El nombre no puede iniciar con espacios."}
+        elif not validar_cadena_letras(jd['nombre']):
+            especialidad = {'message': "El nombre solo puede contener letras."}
         elif len(jd['nombre']) < 4:
             especialidad = {'message': "El nombre debe tener mas de 4 caracteres."}
         elif not validar_cadena_espacios(jd['nombre']):
@@ -58,6 +62,8 @@ class EspecialidadViews(View):
             especialidad = {'message': "El nombre debe tener menos de 50 caracteres."}
         elif len(jd['descripcion']) <= 0:
             especialidad = {'message': "La descripción esta vacía."}
+        elif jd['descripcion'][0]==" ":
+            especialidad = {'message': "La descripcion no puede iniciar con espacios."}
         elif len(jd['descripcion']) < 4:
             especialidad = {'message': "La descripción debe tener mas de 4 caracteres."}
         elif not validar_cadena_espacios(jd['descripcion']):
@@ -80,8 +86,12 @@ class EspecialidadViews(View):
             especialidades=EspecialidadMedico.objects.get(id=id)
             if len(jd['nombre']) <= 0:
                 especialidad = {'message': "El nombre esta vacío."}
+            elif jd['nombre'][0]==" ":
+                especialidad = {'message': "El nombre no puede iniciar con espacios."}
             elif len(jd['nombre']) < 4:
                 especialidad = {'message': "El nombre debe tener mas de 4 caracteres."}
+            elif not validar_cadena_letras(jd['nombre']):
+                especialidad = {'message': "El nombre solo puede contener letras."}
             elif not validar_cadena_espacios(jd['nombre']):
                 especialidad = {'message': "No se permiten mas de un espacio consecutivo."}
             elif validar_cadena_repeticion(jd['nombre']):
@@ -90,6 +100,8 @@ class EspecialidadViews(View):
                 especialidad = {'message': "El nombre debe tener menos de 50 caracteres."}
             elif len(jd['descripcion']) <= 0:
                 especialidad = {'message': "La descripción esta vacía."}
+            elif jd['descripcion'][0]==" ":
+                especialidad = {'message': "La descripcion no puede iniciar con espacios."}
             elif len(jd['descripcion']) < 4:
                 especialidad = {'message': "La descripción debe tener mas de 4 caracteres."}
             elif not validar_cadena_espacios(jd['descripcion']):
@@ -133,3 +145,7 @@ def validar_cadena_repeticion(cadena):
 def validar_cadena_espacios(cadena):
     patron = r'^[^ ]+(?: {0,1}[^ ]+)*$'
     return bool(re.match(patron,cadena))
+
+def validar_cadena_letras(cadena):
+    patron = r'^[A-Za-z\s]+$'
+    return bool(re.search(patron, cadena))

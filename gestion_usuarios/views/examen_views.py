@@ -222,6 +222,8 @@ class examenViews(View):
 
         elif len(jd['observacion']) <= 0:
             examenes = {'message': "La observación esta vacía."}
+        elif jd['observacion']['0'] == " ":
+            examenes = {'message': "La observación no puede iniciar con espacios."}
         elif len(jd['observacion']) < 5:
             examenes = {'message': "La observación debe tener más de 5 caracteres."}
         elif len(jd['observacion']) > 50:
@@ -267,6 +269,8 @@ class examenViews(View):
             examenes = {'message': "Ya hay una cita programada en la misma fecha"}
         elif len(jd['observacion']) <= 0:
             examenes = {'message': "La observación esta vacía."}
+        elif jd['observacion']['0'] == " ":
+            examenes = {'message': "La observación no puede iniciar con espacios."}
         elif len(jd['observacion']) < 5:
             examenes = {'message': "La observación debe tener más de 5 caracteres."}
         elif len(jd['observacion']) > 50:

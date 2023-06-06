@@ -176,6 +176,10 @@ class TiposView(View):
             tipo = {'message': "La descripción esta vacía."}
         elif len(jd['descripcion']) < 4:
             tipo = {'message': "La descripción debe tener mas de 4 caracteres."}
+        elif not validar_cadena_espacios(jd['descripcion']):
+            tipo = {'message': "No se permiten mas de un espacio consecutivo.[descripcion]"}
+        elif validar_cadena_repeticion(jd['descripcion']):
+            tipo = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo.[descripcion]"}
         elif len(jd['descripcion']) > 50:
             tipo = {'message': "La descripción debe tener menos de 50 caracteres."}
         elif jd['idsubtipo'] == [] or jd['idsubtipo'] == 0:
@@ -263,6 +267,10 @@ class TiposView(View):
                 tipo = {'message': "La descripción debe tener mas de 4 caracteres."}
             elif len(jd['descripcion']) > 50:
                 tipo = {'message': "La descripción debe tener menos de 50 caracteres."}
+            elif not validar_cadena_espacios(jd['descripcion']):
+                tipo = {'message': "No se permiten mas de un espacio consecutivo.[descripcion]"}
+            elif validar_cadena_repeticion(jd['descripcion']):
+                tipo = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo.[descripcion]"}
             elif jd['idsubtipo'] == [] or jd['idsubtipo'] == 0:
                 tipo = {'message': "Seleccione un subtipo existente."}
             elif validar_tipo_impuesto(int(jd['idsubtipo'])) and (jd['idImpuesto'] == [] or jd['idImpuesto'] == 0):

@@ -46,10 +46,14 @@ class metodoPagoViews(View):
         jd=json.loads(request.body)
         if len(jd['nombre']) <= 0:
             metodop = {'message': "El nombre esta vacío."}
+        elif jd['nombre'] == " ":
+            metodop = {'message': "El nombre no puede iniciar con espacios."}
         elif validar_metodop_repetida(jd['nombre']):
             metodop = {'message': "El nombre ya existe."}
         elif len(jd['nombre']) < 4:
             metodop = {'message': "El nombre debe tener mas de 4 caracteres."}
+        elif not validar_cadena_letras(jd['nombre']):
+            metodop = {'message': "El nombre solo permite letras."}
         elif not validar_cadena_espacios(jd['nombre']):
             metodop = {'message': "No se permiten mas de un espacio consecutivo."}
         elif validar_cadena_repeticion(jd['nombre']):
@@ -58,6 +62,10 @@ class metodoPagoViews(View):
             metodop = {'message': "El nombre debe tener menos de 50 caracteres."}
         elif len(jd['descripcion']) <= 0:
             metodop = {'message': "La descripción esta vacía."}
+        elif jd['descripcion'] == " ":
+            metodop = {'message': "La descripcion no puede iniciar con espacios."}
+        elif not validar_cadena_letras(jd['descripcion']):
+            metodop = {'message': "La descripcion solo permite letras."}
         elif len(jd['descripcion']) < 4:
             metodop = {'message': "La descripción debe tener mas de 4 caracteres."}
         elif not validar_cadena_espacios(jd['descripcion']):
@@ -68,7 +76,7 @@ class metodoPagoViews(View):
             metodop = {'message': "La descripción debe tener menos de 50 caracteres."}
         else:
             nombre_minuscula = (jd['nombre']).lower()
-            MetodoDePago.objects.create(nombre_minuscula, descripcion=jd['descripcion'])
+            MetodoDePago.objects.create(nombre=nombre_minuscula, descripcion=jd['descripcion'])
             metodop = {'message':"Registro Exitoso."}
         return JsonResponse(metodop)
 
@@ -80,8 +88,12 @@ class metodoPagoViews(View):
             metodopago=MetodoDePago.objects.get(id=id)
             if len(jd['nombre']) <= 0:
                 metodop = {'message': "El nombre esta vacío."}
+            elif jd['nombre'] == " ":
+                metodop = {'message': "El nombre no puede iniciar con espacios."}
             elif len(jd['nombre']) < 4:
                 metodop = {'message': "El nombre debe tener mas de 4 caracteres."}
+            elif not validar_cadena_letras(jd['nombre']):
+                metodop = {'message': "El nombre solo permite letras."}
             elif not validar_cadena_espacios(jd['nombre']):
                 metodop = {'message': "No se permiten mas de un espacio consecutivo."}
             elif validar_cadena_repeticion(jd['nombre']):
@@ -90,6 +102,10 @@ class metodoPagoViews(View):
                 metodop = {'message': "El nombre debe tener menos de 50 caracteres."}
             elif len(jd['descripcion']) <= 0:
                 metodop = {'message': "La descripción esta vacía."}
+            elif jd['descripcion'] == " ":
+                metodop = {'message': "La descripcion no puede iniciar con espacios."}
+            elif not validar_cadena_letras(jd['descripcion']):
+                metodop = {'message': "La descripcion solo permite letras."}
             elif len(jd['descripcion']) < 4:
                 metodop = {'message': "La descripción debe tener mas de 4 caracteres."}
             elif not validar_cadena_espacios(jd['descripcion']):
@@ -133,3 +149,7 @@ def validar_cadena_repeticion(cadena):
 def validar_cadena_espacios(cadena):
     patron = r'^[^ ]+(?: {0,1}[^ ]+)*$'
     return bool(re.match(patron,cadena))
+
+def validar_cadena_letras(cadena):
+    patron = r'^[A-Za-z\s]+$'
+    return bool(re.search(patron, cadena))

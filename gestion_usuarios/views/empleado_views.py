@@ -64,8 +64,12 @@ class EmpleadoViews(View):
         rsp_fechaNacimiento = datetime.date.fromisoformat(jd['fechaNacimiento'])
         if len(jd['nombre']) <= 0:
             empleados = {'message': "El nombre esta vacío."}
+        elif jd['nombre'][0]==" ":
+            empleados = {'message': "El nombre no puede iniciar con espacios."}
         elif len(jd['nombre']) < 3:
             empleados = {'message': "El nombre debe tener más de 3 caracteres."}
+        elif not validar_cadena_letras(jd['nombre']):
+            empleados = {'message': "El nombre solo puede contener letras."}
         elif not validar_cadena_espacios(jd['nombre']):
             empleados = {'message': "No se permiten mas de un espacio consecutivo."}
         elif validar_cadena_repeticion(jd['nombre']):
@@ -74,8 +78,12 @@ class EmpleadoViews(View):
             empleados = {'message': "El nombre debe tener menos de 50 caracteres."}
         elif len(jd['apellidos']) <= 0:
             empleados = {'message': "El apellido esta vacío."}
+        elif jd['apellidos'][0]==" ":
+            empleados = {'message': "El apellido no puede iniciar con espacios."}
         elif len(jd['apellidos']) < 3:
             empleados = {'message': "El apellido debe tener más de 3 caracteres."}
+        elif not validar_cadena_letras(jd['apellidos']):
+            empleados = {'message': "El apellido solo puede contener letras."}
         elif not validar_cadena_espacios(jd['apellidos']):
             empleados = {'message': "No se permiten mas de un espacio consecutivo."}
         elif validar_cadena_repeticion(jd['apellidos']):
@@ -84,6 +92,8 @@ class EmpleadoViews(View):
             empleados = {'message': "El apellido debe tener menos de 50 caracteres."}
         elif len(jd['email']) <= 0:
             empleados = {'message': "El email esta vacío."}
+        elif jd['email'][0]==" ":
+            empleados = {'message': "El email no puede iniciar con espacios."}
         elif len(jd['email']) < 5:
             empleados = {'message': "El email debe tener más de 5 caracteres."}
         elif len(jd['email']) > 30:
@@ -124,6 +134,8 @@ class EmpleadoViews(View):
             empleados = {'message': "El teléfono debe comenzar con 2, 3, 7, 8, 9."}
         elif len(jd['direccion']) <= 0:
             empleados = {'message': "La dirección esta vacía."}
+        elif jd['direccion'][0]==" ":
+            empleados = {'message': "La direccion no puede iniciar con espacios."}
         elif len(jd['direccion']) < 5:
             empleados = {'message': "La dirección debe tener más de 5 caracteres."}
         elif len(jd['direccion']) > 50:
@@ -134,6 +146,8 @@ class EmpleadoViews(View):
             empleados = {'message': "El id de documento no existe."}
         elif len(jd['documento']) <= 0:
             empleados = {'message': "El documento esta vacío."}
+        elif jd['documento'][0]==" ":
+            empleados = {'message': "La documento no puede iniciar con espacios."}
         elif (validar_documento_repetido(jd['documento'])):
             empleados = {'message': "El documento esta en uso."}
         elif not len(jd['documento']) == (validar_documento(jd['idTipoDocumentos'])):
@@ -146,11 +160,12 @@ class EmpleadoViews(View):
             empleados = {'message': "Activo unicamente puede ser 0 o 1."}
         else:
             empleados = {'message': "Registro Exitoso."}
-            Empleado.objects.create(nombre=jd['nombre'], apellidos=jd['apellidos'],
+            Empleado.objects.create(nombre=(jd['nombre'].lower()).capitalize(), 
+                                    apellidos=(jd['apellidos'].lower()).capitalize(),
                                     fechaNacimiento=(jd['fechaNacimiento']),
-                                    email=jd['email'],
+                                    email=jd['email'].lower(),
                                     telefono=str(jd['telefono']),
-                                    direccion=jd['direccion'],
+                                    direccion=jd['direccion'].lower(),
                                     idTipoDocumentos=(instanciar_documento(jd['idTipoDocumentos'])),
                                     documento=jd['documento'],
                                     idEspecialidadMedico=instanciar_especialidad(jd['idEspecialidadMedico']),
@@ -170,8 +185,12 @@ class EmpleadoViews(View):
             empleado=Empleado.objects.get(id=id)
             if len(jd['nombre']) <= 0:
                 empleados = {'message': "El nombre esta vacío."}
+            elif jd['nombre'][0]==" ":
+                empleados = {'message': "El nombre no puede iniciar con espacios."}
             elif len(jd['nombre']) < 3:
                 empleados = {'message': "El nombre debe tener más de 3 caracteres."}
+            elif not validar_cadena_letras(jd['nombre']):
+                empleados = {'message': "El nombre solo puede contener letras."}
             elif not validar_cadena_espacios(jd['nombre']):
                 empleados = {'message': "No se permiten mas de un espacio consecutivo."}
             elif validar_cadena_repeticion(jd['nombre']):
@@ -180,8 +199,12 @@ class EmpleadoViews(View):
                 empleados = {'message': "El nombre debe tener menos de 50 caracteres."}
             elif len(jd['apellidos']) <= 0:
                 empleados = {'message': "El apellido esta vacío."}
+            elif jd['apellidos'][0]==" ":
+                empleados = {'message': "El apellido no puede iniciar con espacios."}
             elif len(jd['apellidos']) < 3:
                 empleados = {'message': "El apellido debe tener más de 3 caracteres."}
+            elif not validar_cadena_letras(jd['apellidos']):
+                empleados = {'message': "El apellido solo puede contener letras."}
             elif not validar_cadena_espacios(jd['apellidos']):
                 empleados = {'message': "No se permiten mas de un espacio consecutivo."}
             elif validar_cadena_repeticion(jd['apellidos']):
@@ -190,6 +213,8 @@ class EmpleadoViews(View):
                 empleados = {'message': "El apellido debe tener menos de 50 caracteres."}
             elif len(jd['email']) <= 0:
                 empleados = {'message': "El email esta vacío."}
+            elif jd['email'][0]==" ":
+                empleados = {'message': "El email no puede iniciar con espacios."}
             elif len(jd['email']) < 5:
                 empleados = {'message': "El email debe tener más de 5 caracteres."}
             elif len(jd['email']) > 30:
@@ -231,6 +256,8 @@ class EmpleadoViews(View):
                 empleados = {'message': "El teléfono debe comenzar con 2, 3, 7, 8, 9."}
             elif len(jd['direccion']) <= 0:
                 empleados = {'message': "La dirección esta vacía."}
+            elif jd['direccion'][0]==" ":
+                empleados = {'message': "La direccion no puede iniciar con espacios."}
             elif len(jd['direccion']) < 5:
                 empleados = {'message': "La dirección debe tener más de 5 caracteres."}
             elif len(jd['direccion']) > 50:
@@ -241,6 +268,8 @@ class EmpleadoViews(View):
                 empleados = {'message': "El id de documento no existe."}
             elif len(jd['documento']) <= 0:
                 empleados = {'message': "El documento esta vacío."}
+            elif jd['documento'][0]==" ":
+                empleados = {'message': "El documento no puede iniciar con espacios."}
             elif not len(jd['documento']) == (validar_documento(jd['idTipoDocumentos'])):
                 empleados = {'message': "El documento debe cumplir la longitud asignada."}
             elif (jd['idCargoEmpleado']) <= 0:
@@ -251,11 +280,11 @@ class EmpleadoViews(View):
                 empleados = {'message': "Activo unicamente puede ser 0 o 1."}
             else:
                 empleados = {'message': "Registro Exitoso."}
-                empleado.nombre = jd['nombre']
-                empleado.apellidos = jd['apellidos']
-                empleado.email = jd['email']
+                empleado.nombre = (jd['nombre'].lower()).capitalize()
+                empleado.apellidos = (jd['apellidos'].lower()).capitalize()
+                empleado.email = jd['email'].lower()
                 empleado.telefono = str(jd['telefono'])
-                empleado.direccion = jd['direccion']
+                empleado.direccion = jd['direccion'].lower()
                 empleado.fechaNacimiento = str(jd['fechaNacimiento'])
                 empleado.idTipoDocumentos = instanciar_documento(jd['idTipoDocumentos'])
                 empleado.documento = jd['documento']
@@ -336,7 +365,9 @@ def validar_cadena_espacios(cadena):
     patron = r'^[^ ]+(?: {0,1}[^ ]+)*$'
     return bool(re.match(patron,cadena))
 
-
+def validar_cadena_letras(cadena):
+    patron = r'^[A-Za-z\s]+$'
+    return bool(re.search(patron, cadena))
 
 
 
