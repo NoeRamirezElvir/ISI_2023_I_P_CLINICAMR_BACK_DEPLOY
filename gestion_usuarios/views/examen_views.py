@@ -228,10 +228,7 @@ class examenViews(View):
             examenes = {'message': "La observación debe tener más de 5 caracteres."}
         elif len(jd['observacion']) > 50:
             examenes = {'message': "La observación debe tener menos de 50 caracteres."}
-        elif not validar_cadena_espacios(jd['observacion']):
-            examenes = {'message': "No se permiten mas de un espacio consecutivo.[observacion]"}
-        elif validar_cadena_repeticion(jd['observacion']):
-            examenes = {'message': "No se permiten mas de dos caracteres consecutivos del mismo tipo.[observacion]"} 
+
         else:
             examenes = {'message': "Registro Exitoso."}
             Examen.objects.create(idMuestra=instanciar_muestra(jd['idMuestra']),
