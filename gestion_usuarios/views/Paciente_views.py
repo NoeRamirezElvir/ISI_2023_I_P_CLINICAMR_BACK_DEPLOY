@@ -104,7 +104,7 @@ class PacienteViews(View):
         
         elif validar_fecha(jd['fechaNacimiento']):
             pacientes = {'message': "La fecha de Nacimiento no puede ser mayor a la actual"}
-        elif not validar_fecha_anterior(jd['fecha']):
+        elif not validar_fecha_anterior(jd['fechaNacimiento']):
             pacientes = {'message': "La fecha de nacimiento no está en el rango autorizado."}
         elif len(str(jd['fechaNacimiento'])) <= 0:
             pacientes = {'message': "La fecha de nacimiento esta vacía."}
@@ -205,7 +205,7 @@ class PacienteViews(View):
             
             elif validar_fecha(jd['fechaNacimiento']):
                 pacientes = {'message': "La fecha de Nacimiento no puede ser mayor a la actual"}
-            elif not validar_fecha_anterior(jd['fecha']):
+            elif not validar_fecha_anterior(jd['fechaNacimiento']):
                 pacientes = {'message': "La fecha de nacimiento no está en el rango autorizado."}
             elif len(str(jd['fechaNacimiento'])) <= 0:
                 pacientes = {'message': "La fecha de nacimiento esta vacía."}
