@@ -333,12 +333,12 @@ def validar_fecha(fechaNacimiento):
     else:
         return True
     
-def validar_fecha_anterior(fecha):
-    fecha_dato = datetime.fromisoformat(fecha)
-    fecha_actual = datetime.now().date()
+def validar_fecha_anterior(fechaNacimiento):
+    fecha_dato = datetime.date.fromisoformat(fechaNacimiento)
+    fecha_actual = datetime.date.today()
     fecha_limite = fecha_actual - datetime.timedelta(days=7)
-
-    return fecha_dato >= fecha_limite
+    
+    return fecha_dato < fecha_limite
 
 
 def validar_cadena_letras(cadena):
