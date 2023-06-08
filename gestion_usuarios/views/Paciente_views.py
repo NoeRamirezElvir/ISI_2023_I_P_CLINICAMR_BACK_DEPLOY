@@ -104,6 +104,8 @@ class PacienteViews(View):
         
         elif validar_fecha(jd['fechaNacimiento']):
             pacientes = {'message': "La fecha de Nacimiento no puede ser mayor a la actual"}
+        elif not validar_fecha_anterior(jd['fecha']):
+            pacientes = {'message': "La fecha de nacimiento no está en el rango autorizado."}
         elif len(str(jd['fechaNacimiento'])) <= 0:
             pacientes = {'message': "La fecha de nacimiento esta vacía."}
         elif len(str(jd['fechaNacimiento'])) > 10:
@@ -203,6 +205,8 @@ class PacienteViews(View):
             
             elif validar_fecha(jd['fechaNacimiento']):
                 pacientes = {'message': "La fecha de Nacimiento no puede ser mayor a la actual"}
+            elif not validar_fecha_anterior(jd['fecha']):
+                pacientes = {'message': "La fecha de nacimiento no está en el rango autorizado."}
             elif len(str(jd['fechaNacimiento'])) <= 0:
                 pacientes = {'message': "La fecha de nacimiento esta vacía."}
             elif len(str(jd['fechaNacimiento'])) > 10:
@@ -328,6 +332,13 @@ def validar_fecha(fechaNacimiento):
         return False
     else:
         return True
+    
+def validar_fecha_anterior(fecha):
+    fecha_actual = datetime.datetime.now().date()
+    fecha_limite = fecha_actual - datetime.timedelta(days=7)
+
+    return fecha >= fecha_limite
+
 
 def validar_cadena_letras(cadena):
     patron = r'^[A-Za-z\s]+$'
