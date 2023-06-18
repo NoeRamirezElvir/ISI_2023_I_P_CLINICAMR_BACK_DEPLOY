@@ -20,7 +20,7 @@ class LoginViews(View):
 
     def get(self, request):
         usuario = Usuario.objects.get(sesion=1)
-        empleado = list(Empleado.objects.get(id=usuario.idEmpleado.id))
+        empleado = Empleado.objects.get(id=usuario.idEmpleado.id)
 
         mensaje = {'usuario': empleado}
         return JsonResponse(mensaje)
