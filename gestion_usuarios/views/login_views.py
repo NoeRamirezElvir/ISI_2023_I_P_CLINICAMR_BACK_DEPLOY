@@ -16,16 +16,7 @@ class LoginViews(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
-
-
-    def get(self, request):
-        usuario = Usuario.objects.get(sesion=1)
-        empleado = Empleado.objects.get(id=usuario.idEmpleado.id)
-
-        mensaje = {'usuario': empleado}
-        return JsonResponse(mensaje)
-
-                                           
+                                        
 
     def post(self, request):
         jd=json.loads(request.body)
