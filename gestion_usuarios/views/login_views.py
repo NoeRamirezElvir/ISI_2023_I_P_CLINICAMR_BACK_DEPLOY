@@ -21,9 +21,8 @@ class LoginViews(View):
     def get(self, request):
         usuario = Usuario.objects.get(sesion=1)
         empleado = Empleado.objects.get(id=usuario.idEmpleado.id)
-        serialized_empleado = serializers.serialize('json', [empleado])
 
-        mensaje = {'usuario': serialized_empleado}
+        mensaje = {'usuario': empleado}
         return JsonResponse(mensaje)
 
                                            
