@@ -226,7 +226,7 @@ urlpatterns = [
 
     path('permisos/', PermisosViews.as_view() , name='permisos_list'),
     path('permisos/busqueda/<str:criterio>/<str:campo>', PermisosViews.as_view() , name='permisos_process'),
-    path('permisos/id/<int:id>', PermisosViews.as_view() , name='permisos_process_id'), 
+    path('permisos/id/<int:id>', PermisosViews.as_view() , name='permisos_process_id'),
 ]
 
 
