@@ -282,4 +282,16 @@ class RecaudoDetalleExamen(models.Model):
         idExamen = models.ForeignKey(Examen, on_delete=models.PROTECT)
         idRecaudo = models.ForeignKey(Recaudo, on_delete=models.PROTECT)
 
+class Acciones(models.Model):
+        nombre = models.CharField(max_length=50)
+        descripcion = models.CharField(max_length=50)
 
+class Pantallas(models.Model):
+        nombre = models.CharField(max_length=50)
+        descripcion = models.CharField(max_length=50)
+
+class Permisos(models.Model):
+        idCargoEmpleado = models.ForeignKey(CargoEmpleado, on_delete=models.PROTECT)
+        idAcciones = models.ForeignKey(Acciones, on_delete=models.PROTECT)
+        idPantallas = models.ForeignKey(Pantallas, on_delete=models.PROTECT)
+        activo = models.PositiveSmallIntegerField()
