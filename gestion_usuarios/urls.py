@@ -46,6 +46,10 @@ from .views.recaudo_views import *
 from .views.descuentos_views import *
 from .views.views_listas_recaudo import *
 from .views.pdf_views import *
+from .views.acciones_views import *
+from .views.pantallas_views import *
+from .views.permisos_views import *
+
 
 urlpatterns = [
     path('login/', LoginViews.as_view() , name='login_view'),
@@ -211,6 +215,18 @@ urlpatterns = [
     path('listasRecaudo/', ListasRecaudo.as_view() , name='listas_recaudo_list'),
     
     path('reimprimirPdf/id/<int:id>', ReimprimirPdf.as_view() , name='pdf_datos'),
+
+    path('acciones/', AccionesView.as_view() , name='acciones_list'),
+    path('acciones/busqueda/<str:criterio>/<str:campo>', AccionesView.as_view() , name='acciones_process'),
+    path('acciones/id/<int:id>', AccionesView.as_view() , name='acciones_process_id'), 
+
+    path('pantallas/', PantallasView.as_view() , name='pantallas_list'),
+    path('pantallas/busqueda/<str:criterio>/<str:campo>', PantallasView.as_view() , name='pantallas_process'),
+    path('pantallas/id/<int:id>', PantallasView.as_view() , name='pantallas_process_id'), 
+
+    path('permisos/', PermisosViews.as_view() , name='permisos_list'),
+    path('permisos/busqueda/<str:criterio>/<str:campo>', PermisosViews.as_view() , name='permisos_process'),
+    path('permisos/id/<int:id>', PermisosViews.as_view() , name='permisos_process_id'), 
 ]
 
 
