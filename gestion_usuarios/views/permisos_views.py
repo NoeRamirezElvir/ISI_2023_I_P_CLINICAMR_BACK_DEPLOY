@@ -162,31 +162,30 @@ class PermisosViews(View):
         return JsonResponse(permisos)
     
 
-#Actualizar un registro de tipo
     def put(self, request,id):
-        jd=json.loads(request.body)
-        permisos = list(Permisos.objects.filter(id=id).values())
-        if len(permisos) > 0:
-            
-            permiso=Permisos.objects.get(id=id)
-        if validar_id_acciones(jd['idAcciones']):    
-            permisos = {'message': "Las acciones no existen"}
-        if validar_id_cargo(jd['idCargoEmpleado']):    
-            permisos = {'message': "El Cargo no existe"}
-        if validar_id_pantallas(jd['idPantallas']):    
-            permisos = {'message': "La pantalla no existe"}
-        elif jd['activo'] < 0:
-            permisos = {'message': "Activo debe ser positivo."}
-        elif jd['activo'] > 1:
-            permisos = {'message': "Activo debe unicamente puede ser 0 o 1."}
-        else:
-            permiso.idCargoEmpleado = instanciar_cargo(jd['idCargoEmpleado'])
-            permiso.idAcciones = instanciar_acciones(jd['idAutorizacionCargo'])
-            permiso.idPantallas = instanciar_pantallas(jd['idEmpleado'])
-            permiso.activo = jd['activo']
-            permiso.save()
-            permisos = {'message': "La actualización fue exitosa."}
-        return JsonResponse(permisos)
+            jd=json.loads(request.body)
+            permisos = list(Permisos.objects.filter(id=id).values())
+            if len(permisos) > 0:
+                
+                permiso=Permisos.objects.get(id=id)
+            if validar_id_acciones(jd['idAcciones']):    
+                permisos = {'message': "Las acciones no existen"}
+            if validar_id_cargo(jd['idCargoEmpleado']):    
+                permisos = {'message': "El Cargo no existe"}
+            if validar_id_pantallas(jd['idPantallas']):    
+                permisos = {'message': "La pantalla no existe"}
+            elif jd['activo'] < 0:
+                permisos = {'message': "Activo debe ser positivo."}
+            elif jd['activo'] > 1:
+                permisos = {'message': "Activo debe unicamente puede ser 0 o 1."}
+            else:
+                permiso.idCargoEmpleado = instanciar_cargo(jd['idCargoEmpleado'])
+                permiso.idAcciones = instanciar_acciones(jd['idAcciones'])
+                permiso.idPantallas = instanciar_pantallas(jd['idPantallas'])
+                permiso.activo = jd['activo']
+                permiso.save()
+                permisos = {'message': "La actualización fue exitosa."}
+            return JsonResponse(permisos)
         
         
 #Eliminar un registro de tipo
