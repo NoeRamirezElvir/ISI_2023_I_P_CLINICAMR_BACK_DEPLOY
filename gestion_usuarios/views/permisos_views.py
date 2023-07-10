@@ -170,7 +170,7 @@ class PermisosViews(View):
                 permiso=Permisos.objects.get(id=id)
             if validar_id_acciones(jd['idAcciones']):    
                 permisos = {'message': "Las acciones no existen"}
-            if validar_id_cargo(jd['idCargoEmpleado']):    
+            if validar_id_cargo(jd['idCargoEmpleado']):   
                 permisos = {'message': "El Cargo no existe"}
             if validar_id_pantallas(jd['idPantallas']):    
                 permisos = {'message': "La pantalla no existe"}
