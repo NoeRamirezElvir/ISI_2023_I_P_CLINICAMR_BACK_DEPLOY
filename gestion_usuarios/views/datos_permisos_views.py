@@ -18,7 +18,7 @@ class DatosPermisos(View):
         usuarios = Usuario.objects.filter(sesion=1).select_related('idEmpleado')
         if usuarios:
             empleados = list(Empleado.objects.filter(id=usuarios[0].idEmpleado.id).values())
-        permisos = Permisos.objects.filter(idCargoEmpleado=empleados[0]['idCargoEmpleado_id']).select_related('idAcciones','idCargoEmpleado','idPantallas')
+        permisos = Permisos.objects.filter(idCargoEmpleado=empleados[0]['idCargoEmpleado_id']).select_related('idAcciones','idCargoEmpleado','idPantallas').order_by('idPantallas__nombre')
 
         output = {"permisos": []}
         acciones_por_cargo = {}
