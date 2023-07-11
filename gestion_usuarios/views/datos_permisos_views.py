@@ -19,7 +19,7 @@ class DatosPermisos(View):
         if(usuarios):
             empleados = list(Empleado.objects.filter(id=usuarios[0].idEmpleado.id).values())
 
-        cargo = list(CargoEmpleado.objects.filter(id=empleados[0].idCargoEmpleado.id).values())
+        cargo = list(CargoEmpleado.objects.filter(id=empleados[0].idCargoEmpleado_id).values())
 
         data = {'permisos':cargo}
         return JsonResponse(data)
