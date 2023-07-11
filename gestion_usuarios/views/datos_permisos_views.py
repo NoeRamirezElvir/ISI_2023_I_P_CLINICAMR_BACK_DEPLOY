@@ -16,9 +16,6 @@ class DatosPermisos(View):
     
     def get(self, request):
         usuarios = Usuario.objects.filter(sesion=1).select_related('idEmpleado')
-        if(usuarios):
-            empleados = list(Empleado.objects.filter(id=usuarios[0].idEmpleado.id).values())
-        cargo = list(CargoEmpleado.objects.filter(id=empleados[0].idEmpleado))
-        permisos = Permisos.objects.filter(idCargoEmpleado=cargo[0].id)
 
-        return JsonResponse(permisos)
+
+        return JsonResponse(usuarios)
