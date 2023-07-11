@@ -14,7 +14,7 @@ class DatosPermisos(View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     
-    def get(self, request, campo="",criterio=""):
+    def get(self, request):
         usuarios = Usuario.objects.filter(sesion=1).select_related('idEmpleado')
         if(usuarios):
             empleados = list(Empleado.objects.filter(id=usuarios[0].idEmpleado.id).values())
