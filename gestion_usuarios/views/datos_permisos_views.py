@@ -17,5 +17,4 @@ class DatosPermisos(View):
     def get(self, request):
         usuarios = Usuario.objects.filter(sesion=1).select_related('idEmpleado')
 
-
         return JsonResponse(usuarios)
