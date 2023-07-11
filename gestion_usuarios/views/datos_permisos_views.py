@@ -15,7 +15,9 @@ class DatosPermisos(View):
         return super().dispatch(request, *args, **kwargs)
     
     def get(self, request, campo="",criterio=""):
-        permisos = Permisos.objects.all()
+        usuarios = Usuario.objects.filter(sesion=1).select_related('idEmpleado')
+        if(usuarios):
+            empleados = list(Empleado.objects.filter(id=usuarios[0].idEmpleado.id).values())
 
-
+        permisos = {'empleados':empleados}
         return JsonResponse(permisos)
