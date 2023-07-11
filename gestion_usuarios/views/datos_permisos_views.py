@@ -15,11 +15,12 @@ class DatosPermisos(View):
         return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
-        usuarios = Usuario.objects.filter(sesion=1).select_related('idEmpleado')
-        if(usuarios):
-            empleados = Empleado.objects.filter(id=usuarios[0].idEmpleado.id).values()
-        cargo = CargoEmpleado.objects.filter(id=empleados[0].idCargoEmpleado.id).values()
-        permisos = Permisos.objects.filter(idCargoEmpleado=cargo[0].id).values()
-
-        data = {'permisos':cargo}
+        #usuarios = Usuario.objects.filter(sesion=1).select_related('idEmpleado')
+        #if(usuarios):
+        #    empleados = Empleado.objects.filter(id=usuarios[0].idEmpleado.id).values()
+        #cargo = CargoEmpleado.objects.filter(id=empleados[0].idCargoEmpleado.id).values()
+        #permisos = Permisos.objects.filter(idCargoEmpleado=cargo[0].id).values()
+        
+        permisos = Permisos.objects.all()
+        data = {'permisos':permisos}
         return JsonResponse(data)
