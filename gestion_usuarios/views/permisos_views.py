@@ -59,8 +59,7 @@ class PermisosViews(View):
                     return JsonResponse(context)
                 
             elif criterio == "nombre":
-                
-                permisos = Permisos.objects.filter(idCargoEmpleado__idAcciones_idPantallas_nombre=campo)
+                permisos = Permisos.objects.filter(idPantallas__nombre=campo)
                 if permisos is not None:
                     permisos_values = []
                     for permiso in permisos:
