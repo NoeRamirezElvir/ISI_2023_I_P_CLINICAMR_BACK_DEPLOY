@@ -21,6 +21,6 @@ class DatosPermisos(View):
         #cargo = CargoEmpleado.objects.filter(id=empleados[0].idCargoEmpleado.id).values()
         #permisos = Permisos.objects.filter(idCargoEmpleado=cargo[0].id).values()
         
-        permisos = Permisos.objects.all()
+        permisos = list(Permisos.objects.values())
         data = {'permisos':permisos}
         return JsonResponse(data)
